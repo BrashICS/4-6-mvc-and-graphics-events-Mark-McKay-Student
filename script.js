@@ -1,18 +1,18 @@
 /**
  * ICS4U - Mr. Brash 🐿️
  * 4.6 - MVC and Graphics... a trial run for a game!
- * 
+ *
  * Read through the README carefully!
- * 
- * Author:
+ *
+ * Author: Mark McKay
  */
 
-'use strict';
+"use strict";
 
 // Globals, event listeners, and general tomfoolery
 // Feel free to change values but beware the consequences
-const CVS_WIDTH = 404;
-const CVS_HEIGHT = 404;
+const CVS_WIDTH = 600;
+const CVS_HEIGHT = 600;
 const ROWS = 8;
 const COLS = 8;
 let cvs;
@@ -37,10 +37,9 @@ function setup() {
   for (let y = 0; y < ROWS; y++) {
     grid[y] = [];
     for (let x = 0; x < COLS; x++) {
-      grid[y].push(new Square([255, 255, 255], 0));
+      (y + x) % 2 == 0 ? grid[y].push(new Square([227, 177, 221], 0)) : grid[y].push(new Square([135, 74, 128], 0));
     }
   }
-  
 }
 
 // Draw a new frame of the scene
@@ -59,25 +58,25 @@ function draw() {
  */
 function draw_grid(x, y) {
   // Get the size of each square
-  let width = Math.floor(CVS_WIDTH/x);
-  let height = Math.floor(CVS_HEIGHT/y);
-  
+  let width = Math.floor(CVS_WIDTH / x);
+  let height = Math.floor(CVS_HEIGHT / y);
+
   // Center the grid on the canvas if there's a rounding error
-  let x_buffer = (CVS_WIDTH - width*x)/2
-  let y_buffer = (CVS_HEIGHT - height*y)/2
+  let x_buffer = (CVS_WIDTH - width * x) / 2;
+  let y_buffer = (CVS_HEIGHT - height * y) / 2;
 
   stroke("black");
   for (let row = 0; row < y; row++) {
     for (let col = 0; col < x; col++) {
       // Fill the square with the r,g,b values from the model
       fill(...grid[row][col].colour);
-      rect(col*width + x_buffer, row*height + y_buffer, width, height);
+      rect(col * width + x_buffer, row * height + y_buffer, width, height);
 
       // Write the value of the square in the center of it
       if (grid[row][col].value > 0) {
         textAlign(CENTER, CENTER);
-        fill("black")
-        text(grid[row][col].value, (col*width + x_buffer)+width/2, (row*height + y_buffer)+width/2);
+        fill("black");
+        text(grid[row][col].value, col * width + x_buffer + width / 2, row * height + y_buffer + width / 2);
       }
     }
   }
