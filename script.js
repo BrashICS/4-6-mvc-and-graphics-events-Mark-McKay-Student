@@ -90,13 +90,21 @@ function draw_grid(x, y) {
   }
 }
 
-function mouseClicked() {
+/*
+ *
+ */
+function mousePressed() {
   if (mouseX < 0 || mouseY < 0 || mouseY > CVS_HEIGHT || mouseX > CVS_WIDTH) return -1;
-  let y = Math.floor(mouseY / (CVS_HEIGHT / COLS));
-  let x = Math.floor(mouseX / (CVS_WIDTH / ROWS));
+  const y = Math.floor(mouseY / (CVS_HEIGHT / COLS));
+  const x = Math.floor(mouseX / (CVS_WIDTH / ROWS));
   grid[lastY][lastX].deselect();
-  grid[y][x].value++;
+  if (mouseButton === RIGHT) grid[y][x].value = 0;
+  else grid[y][x].value++;
   grid[y][x].colour = [128, 128, 0];
   lastY = y;
   lastX = x;
+}
+
+function keyPressed() {
+  if (key == "Escape") grid[lastY][lastX].deselect();
 }
