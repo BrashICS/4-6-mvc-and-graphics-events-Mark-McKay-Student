@@ -17,15 +17,23 @@ const ROWS = 8;
 const COLS = 8;
 let cvs;
 let grid = [];
+let lastX = 0;
+let lastY = 0;
 
 // The (overly simple) model
 class Square {
   colour = [0, 0, 0];
+  #real_colour = [0, 0, 0];
   value = 0;
 
   constructor(colour, value) {
     this.colour = colour;
+    this.#real_colour = colour;
     this.value = value;
+  }
+
+  deselect() {
+    this.colour = this.#real_colour;
   }
 }
 
@@ -84,5 +92,11 @@ function draw_grid(x, y) {
 
 function mouseClicked() {
   if (mouseX < 0 || mouseY < 0 || mouseY > CVS_HEIGHT || mouseX > CVS_WIDTH) return -1;
-  grid[Math.floor(mouseY / (CVS_HEIGHT / COLS))][Math.floor(mouseX / (CVS_HEIGHT / ROWS))].value++;
+  let y = Math.floor(mouseY / (CVS_HEIGHT / COLS));
+  let x = Math.floor(mouseX / (CVS_WIDTH / ROWS));
+  grid[lastY][lastX].deselect();
+  grid[y][x].value++;
+  grid[y][x].colour = [128, 128, 0];
+  lastY = y;
+  lastX = x;
 }
