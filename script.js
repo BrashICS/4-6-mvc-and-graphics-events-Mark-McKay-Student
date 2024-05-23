@@ -81,3 +81,8 @@ function draw_grid(x, y) {
     }
   }
 }
+
+function mouseClicked() {
+  if (mouseX < 0 || mouseY < 0 || mouseY > CVS_HEIGHT || mouseX > CVS_WIDTH) return -1;
+  grid[Math.floor(mouseY / (CVS_HEIGHT / COLS))][Math.floor(mouseX / (CVS_HEIGHT / ROWS))].value++;
+}
